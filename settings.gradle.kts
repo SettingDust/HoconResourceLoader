@@ -105,12 +105,28 @@ dependencyResolutionManagement.versionCatalogs.create("catalog") {
         .version("$fabricApi+1.10.4+$minecraft")
     // https://modrinth.com/mod/connector-extras/versions
     library("connector-extras", "maven.modrinth", "connector-extras").version("1.9.0+$minecraft")
+
+    /**
+     * ***********
+     * Libraries
+     * ************
+     */
+    // https://modrinth.com/mod/kinecraft-serialization/versions
+    library("kinecraft-serialization", "maven.modrinth", "kinecraft-serialization")
+        .version("1.3.0-fabric")
+
+    // https://github.com/Kotlin/kotlinx.serialization
+    library("kotlinx-serialization-hocon", "org.jetbrains.kotlinx", "kotlinx-serialization-hocon")
+        .version("1.6.2")
+
+    // https://github.com/lightbend/config
+    library("typesafe-config", "com.typesafe", "config").version("1.4.3")
 }
 
 plugins {
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.7.0"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
     // https://github.com/DanySK/gradle-pre-commit-git-hooks
-    id("org.danilopianini.gradle-pre-commit-git-hooks") version "1.1.17"
+    id("org.danilopianini.gradle-pre-commit-git-hooks") version "2.0.0"
 }
 
 gitHooks {

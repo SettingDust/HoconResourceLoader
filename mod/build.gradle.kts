@@ -41,6 +41,11 @@ dependencies {
 
     val modClientImplementation by configurations
     modClientImplementation(catalog.modmenu)
+
+    modImplementation(include(catalog.kinecraft.serialization.get()) {})
+
+    implementation(include(catalog.kotlinx.serialization.hocon.get()) {})
+    implementation(include(catalog.typesafe.config.get()) {})
 }
 
 kotlin { jvmToolchain(17) }
