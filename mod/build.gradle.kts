@@ -17,17 +17,42 @@ archivesName = name
 loom {
     splitEnvironmentSourceSets()
 
+    accessWidenerPath = file("src/main/resources/$id.accesswidener")
+
     mods {
         register(id) {
             sourceSet(sourceSets["main"])
             sourceSet(sourceSets["client"])
         }
     }
+}
 
+sourceSets {
+    create("testmod") {
+        compileClasspath += sourceSets["main"].compileClasspath
+        runtimeClasspath += sourceSets["main"].runtimeClasspath
+        compileClasspath += sourceSets["client"].compileClasspath
+        runtimeClasspath += sourceSets["client"].runtimeClasspath
+    }
+}
+
+loom {
     runs {
-        configureEach { ideConfigGenerated(true) }
+        configureEach {
+            ideConfigGenerated(true)
+            vmArgs(
+                "-Dmixin.debug.export=true",
+                "-Dmixin.debug.verbose=true",
+                "-Dmixin.debug.countInjections=true"
+            )
+        }
         named("client") { name("Fabric Client") }
         named("server") { name("Fabric Server") }
+        create("testmodClient") {
+            client()
+            configName = "Testmod Client"
+            source(sourceSets["testmod"])
+        }
     }
 }
 
@@ -36,11 +61,13 @@ dependencies {
     mappings(variantOf(catalog.yarn) { classifier("v2") })
 
     modImplementation(catalog.fabric.loader)
-    modImplementation(catalog.fabric.api)
     modImplementation(catalog.fabric.kotlin)
 
     val modClientImplementation by configurations
     modClientImplementation(catalog.modmenu)
+
+    "testmodImplementation"(sourceSets.main.get().output)
+    "testmodImplementation"(sourceSets["client"].output)
 
     modImplementation(include(catalog.kinecraft.serialization.get()) {})
 

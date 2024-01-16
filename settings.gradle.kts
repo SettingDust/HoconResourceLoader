@@ -35,7 +35,7 @@ dependencyResolutionManagement.versionCatalogs.create("catalog") {
     plugin("semver", "com.github.jmongard.git-semver-plugin").version("0.11.0")
 
     // https://fabricmc.net/develop/
-    plugin("fabric-loom", "fabric-loom").version("1.4.+")
+    plugin("fabric-loom", "fabric-loom").version("1.5.+")
 
     val minecraft = "1.20.1"
     version("minecraft", minecraft)
