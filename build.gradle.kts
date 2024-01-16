@@ -10,7 +10,7 @@ plugins {
     alias(catalog.plugins.semver)
 }
 
-group = "settingdust.template"
+group = "settingdust.hoconresourceloader"
 
 version = semver.semVersion.toString()
 
