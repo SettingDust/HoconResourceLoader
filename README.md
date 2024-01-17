@@ -20,7 +20,7 @@ The result of the resource pack at https://github.com/SettingDust/HoconResourceL
     ![img.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img.png)  
 - https://github.com/SettingDust/HoconResourceLoader/blob/main/mod/run/resourcepacks/test-resources/assets/minecraft/models/item/dirt.hocon  
     ```hocon
-    - parent: "minecraft:block/stone"
+    parent: "minecraft:block/stone"
     ```
     ![img_1.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_1.png)  
 - https://github.com/SettingDust/HoconResourceLoader/blob/main/mod/run/resourcepacks/test-resources/assets/minecraft/models/item/oak_log.hocon  
