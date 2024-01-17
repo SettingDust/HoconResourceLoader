@@ -6,6 +6,7 @@ import com.typesafe.config.ConfigRenderOptions
 import com.typesafe.config.ConfigSyntax
 import java.io.InputStream
 import java.lang.reflect.Constructor
+import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resource.InputSupplier
 import net.minecraft.resource.NamespaceResourceManager
 import net.minecraft.resource.Resource
@@ -57,25 +58,11 @@ fun ResourcePack.readResource(inputSupplier: InputSupplier<InputStream>) =
     Resource(this, inputSupplier)
 
 val ResultClass =
-    runCatching {
-            // yarn
-            Class.forName("net.minecraft.resource.NamespaceResourceManager\$Result")
-        }
-        .recoverCatching {
-            // intermediary
-            Class.forName("net.minecraft.class_3294\$class_7681")
-        }
-        .recoverCatching {
-            // mojmap
-            Class.forName(
-                "net.minecraft.server.packs.resources.FallbackResourceManager\$1ResourceWithSourceAndIndex"
-            )
-        }
-        .recoverCatching {
-            // srg
-            Class.forName("net.minecraft.src.C_67_.C_243516_")
-        }
-        .getOrThrow()
+    Class.forName(
+        FabricLoader.getInstance()
+            .mappingResolver
+            .mapClassName("intermediary", "net.minecraft.class_3294\$class_7681")
+    )
 val ResultConstructor = ResultClass.constructors.single() as Constructor<out Record>
 
 fun Result(pack: ResourcePack, supplier: InputSupplier<InputStream>, packIndex: Int): Record =
