@@ -41,8 +41,8 @@ public abstract class NamespaceResourceManagerMixin {
     private void getResource$determineJson(
             final Identifier identifier,
             final CallbackInfoReturnable<Optional<Resource>> cir,
-            @Share("isJson") LocalBooleanRef isJson) {
-        if (identifier.getPath().endsWith(".json")) isJson.set(true);
+            @Share("needParse") LocalBooleanRef needParse) {
+        if (HooksKt.canParsing() && identifier.getPath().endsWith(".json")) needParse.set(true);
     }
 
     @Inject(
@@ -58,8 +58,8 @@ public abstract class NamespaceResourceManagerMixin {
             final Identifier identifier,
             final CallbackInfoReturnable<Optional<Resource>> cir,
             @Local ResourcePack resourcePack,
-            @Share("isJson") LocalBooleanRef isJson) {
-        if (resourcePack == null || !isJson.get()) return;
+            @Share("needParse") LocalBooleanRef needParse) {
+        if (resourcePack == null || !needParse.get()) return;
         final var hoconId = HooksKt.toHocon(identifier);
         final var inputSupplier = HooksKt.openHoconResource(resourcePack, hoconId, type, (ResourceManager) this);
         if (inputSupplier != null)
@@ -80,9 +80,9 @@ public abstract class NamespaceResourceManagerMixin {
             final Identifier id,
             final CallbackInfoReturnable<List<Resource>> cir,
             @Local(ordinal = 0) ResourcePack resourcePack,
-            @Share("isJson") LocalBooleanRef isJson,
+            @Share("needParse") LocalBooleanRef needParse,
             @Local List<Resource> list) {
-        if (resourcePack == null || !isJson.get()) return;
+        if (resourcePack == null || !needParse.get()) return;
         final var hoconId = HooksKt.toHocon(id);
         final var inputSupplier = HooksKt.openHoconResource(resourcePack, hoconId, type, (ResourceManager) this);
         if (inputSupplier != null)
@@ -94,10 +94,12 @@ public abstract class NamespaceResourceManagerMixin {
             final String startingPath,
             final Predicate<Identifier> allowedPathPredicate,
             final CallbackInfoReturnable<Map<Identifier, Resource>> cir,
-            @Share("isJson") LocalBooleanRef isJson) {
+            @Share("needParse") LocalBooleanRef needParse) {
         final var resourceFinder = HooksKt.getCurrentResourceFinder().get();
-        if (resourceFinder != null && HooksKt.getFileExtension(resourceFinder).equals(".json")) {
-            isJson.set(true);
+        if (HooksKt.canParsing()
+                && resourceFinder != null
+                && HooksKt.getFileExtension(resourceFinder).equals(".json")) {
+            needParse.set(true);
         }
     }
 
@@ -112,19 +114,21 @@ public abstract class NamespaceResourceManagerMixin {
                                             + "Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/resource/ResourcePack$ResultConsumer;)V"))
     private void findResources$findHocon(
             final CallbackInfoReturnable<Map<Identifier, Resource>> cir,
-            @Share("isJson") LocalBooleanRef isJson,
+            @Share("needParse") LocalBooleanRef needParse,
             @Local ResourcePack resourcePack,
             @Local(ordinal = 1) int index,
             @Local(ordinal = 0) Map<Identifier, Record> map) {
-        if (!isJson.get()) return;
+        if (!needParse.get()) return;
         HooksKt.findHoconResources(resourcePack, type, namespace, index, map, (ResourceManager) this);
     }
 
     @Inject(method = "findAndAdd", at = @At("HEAD"))
-    private void findAndAdd$determineJson(final CallbackInfo ci, @Share("isJson") LocalBooleanRef isJson) {
+    private void findAndAdd$determineJson(final CallbackInfo ci, @Share("needParse") LocalBooleanRef needParse) {
         final var resourceFinder = HooksKt.getCurrentResourceFinder().get();
-        if (resourceFinder != null && HooksKt.getFileExtension(resourceFinder).equals(".json")) {
-            isJson.set(true);
+        if (HooksKt.canParsing()
+                && resourceFinder != null
+                && HooksKt.getFileExtension(resourceFinder).equals(".json")) {
+            needParse.set(true);
         }
     }
 
@@ -138,10 +142,10 @@ public abstract class NamespaceResourceManagerMixin {
                                             + "Ljava/lang/String;Ljava/lang/String;Lnet/minecraft/resource/ResourcePack$ResultConsumer;)V"))
     private void findAndAdd$findHocon(
             final CallbackInfo ci,
-            @Share("isJson") LocalBooleanRef isJson,
+            @Share("needParse") LocalBooleanRef needParse,
             @Local ResourcePack resourcePack,
             @Local Map<Identifier, NamespaceResourceManager.EntryList> idToEntryList) {
-        if (!isJson.get()) return;
+        if (!needParse.get()) return;
         HooksKt.findAndAddHoconResources(resourcePack, type, namespace, idToEntryList, (ResourceManager) this);
     }
 }

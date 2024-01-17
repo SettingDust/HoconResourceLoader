@@ -15,18 +15,23 @@ import kotlin.jvm.optionals.getOrNull
 import net.minecraft.resource.ResourceManager
 import net.minecraft.util.Identifier
 
-class SimpleIncluder(val manager: ResourceManager, val startingPath: String = "") :
-    ConfigIncluder, ConfigIncluderFile, ConfigIncluderURL, ConfigIncluderClasspath {
+class SimpleIncluder(
+    private val manager: ResourceManager,
+    private val hoconId: Identifier,
+    private val startingPath: String = ""
+) : ConfigIncluder, ConfigIncluderFile, ConfigIncluderURL, ConfigIncluderClasspath {
 
     override fun withFallback(fallback: ConfigIncluder) = this
 
     override fun include(context: ConfigIncludeContext, what: String): ConfigObject {
         Identifier.tryParse(what)
             ?.let {
+                abortParsing.set(true)
                 manager.getResource(it).getOrNull()
                     ?: manager
                         .getResource(Identifier(it.namespace, "$startingPath/${it.path}"))
                         .getOrNull()
+                        .also { abortParsing.remove() }
             }
             ?.also {
                 return ConfigFactory.parseReader(it.reader).root()

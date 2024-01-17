@@ -1,0 +1,5 @@
+# Specifically, include json files won't be resolved to hocon.
+# So, you can do patch for the json file and provide the hocon file as json to the game.
+include "minecraft:models/item/torch.json"
+
+textures.layer0 = "minecraft:block/soul_torch"
