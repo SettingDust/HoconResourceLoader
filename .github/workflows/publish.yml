@@ -54,7 +54,6 @@ jobs:
 
           loaders: |
             fabric
-            forge
             quilt
 
           game-versions: |

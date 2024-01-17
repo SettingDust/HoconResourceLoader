@@ -79,7 +79,7 @@ public abstract class NamespaceResourceManagerMixin {
     private void getAllResources$readHoconResources(
             final Identifier id,
             final CallbackInfoReturnable<List<Resource>> cir,
-            @Local ResourcePack resourcePack,
+            @Local(ordinal = 0) ResourcePack resourcePack,
             @Share("isJson") LocalBooleanRef isJson,
             @Local List<Resource> list) {
         if (resourcePack == null || !isJson.get()) return;

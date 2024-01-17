@@ -57,7 +57,25 @@ fun ResourcePack.readResource(inputSupplier: InputSupplier<InputStream>) =
     Resource(this, inputSupplier)
 
 val ResultClass =
-    Class.forName("net.minecraft.resource.NamespaceResourceManager\$Result") as Class<out Record>
+    runCatching {
+            // yarn
+            Class.forName("net.minecraft.resource.NamespaceResourceManager\$Result")
+        }
+        .recoverCatching {
+            // intermediary
+            Class.forName("net.minecraft.class_3294\$class_7681")
+        }
+        .recoverCatching {
+            // mojmap
+            Class.forName(
+                "net.minecraft.server.packs.resources.FallbackResourceManager\$1ResourceWithSourceAndIndex"
+            )
+        }
+        .recoverCatching {
+            // srg
+            Class.forName("net.minecraft.src.C_67_.C_243516_")
+        }
+        .getOrThrow()
 val ResultConstructor = ResultClass.constructors.single() as Constructor<out Record>
 
 fun Result(pack: ResourcePack, supplier: InputSupplier<InputStream>, packIndex: Int): Record =
