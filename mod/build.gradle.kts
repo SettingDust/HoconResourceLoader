@@ -71,7 +71,7 @@ dependencies {
 
     modImplementation(include(catalog.kinecraft.serialization.get()) {})
 
-    implementation(include(catalog.kotlinx.serialization.hocon.get()) {})
+    //    implementation(include(catalog.kotlinx.serialization.hocon.get()) {})
     implementation(include(catalog.typesafe.config.get()) {})
 }
 

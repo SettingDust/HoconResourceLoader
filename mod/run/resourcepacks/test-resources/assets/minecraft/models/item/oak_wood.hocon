@@ -1,0 +1,3 @@
+# Will try to find under the starting path that passed to resource manager.
+# It's `models/` here
+include "minecraft:item/dirt.json"

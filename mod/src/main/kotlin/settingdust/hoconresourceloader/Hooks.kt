@@ -1,21 +1,20 @@
 package settingdust.hoconresourceloader
 
 import com.typesafe.config.ConfigFactory
+import com.typesafe.config.ConfigParseOptions
 import com.typesafe.config.ConfigRenderOptions
+import com.typesafe.config.ConfigSyntax
 import java.io.InputStream
 import java.lang.reflect.Constructor
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.hocon.Hocon
 import net.minecraft.resource.InputSupplier
 import net.minecraft.resource.NamespaceResourceManager
 import net.minecraft.resource.Resource
 import net.minecraft.resource.ResourceFinder
+import net.minecraft.resource.ResourceManager
 import net.minecraft.resource.ResourcePack
 import net.minecraft.resource.ResourceType
 import net.minecraft.util.Identifier
 import settingdust.hoconresourceloader.mixin.ResourceFinderAccessor
-
-@OptIn(ExperimentalSerializationApi::class) val hocon = Hocon {}
 
 var currentResourceFinder = ThreadLocal<ResourceFinder?>()
 
@@ -24,19 +23,29 @@ val ResourceFinder.directoryName
 val ResourceFinder.fileExtension
     get() = (this as ResourceFinderAccessor).fileExtension!!
 
-fun Identifier.toHocon() = Identifier(namespace, "${path.removeSuffix(".json")}.hocon")
+private const val HOCON_SUFFIX = ".hocon"
+private const val JSON_SUFFIX = ".json"
 
-fun Identifier.toJson() = Identifier(namespace, "${path.removeSuffix(".hocon")}.json")
+fun Identifier.toHocon() = Identifier(namespace, "${path.removeSuffix(JSON_SUFFIX)}$HOCON_SUFFIX")
+
+fun Identifier.toJson() = Identifier(namespace, "${path.removeSuffix(HOCON_SUFFIX)}$JSON_SUFFIX")
 
 fun ResourcePack.openHoconResource(
     identifier: Identifier,
-    type: ResourceType
+    type: ResourceType,
+    manager: ResourceManager
 ): InputSupplier<InputStream>? {
     val resourceSupplier = open(type, identifier) ?: return null
     // Json file has no mcmeta. Needn't read
     val inputStream = resourceSupplier.get()
+    val directoryName = currentResourceFinder.get()?.directoryName
     return InputSupplier {
-        ConfigFactory.parseReader(inputStream.reader())
+        ConfigFactory.parseReader(
+                inputStream.reader(),
+                ConfigParseOptions.defaults()
+                    .setSyntax(ConfigSyntax.CONF)
+                    .setIncluder(SimpleIncluder(manager, directoryName ?: ""))
+            )
             .root()
             .render(ConfigRenderOptions.concise())
             .encodeToByteArray()
@@ -58,31 +67,37 @@ fun ResourcePack.findHoconResources(
     type: ResourceType,
     namespace: String,
     index: Int,
-    map: MutableMap<Identifier, Record>
-) =
-    findResources(
+    map: MutableMap<Identifier, Record>,
+    manager: ResourceManager
+) {
+    val resourceFinder = currentResourceFinder.get()!!
+    return findResources(
         type,
         namespace,
-        currentResourceFinder.get()!!.directoryName,
+        resourceFinder.directoryName,
     ) { id, _ ->
-        if (!id.path.endsWith(".hocon")) return@findResources
-        val inputSupplier = openHoconResource(id, type)
+        if (!id.path.endsWith(HOCON_SUFFIX)) return@findResources
+        val inputSupplier = openHoconResource(id, type, manager)
         if (inputSupplier != null) map[id.toJson()] = Result(this, inputSupplier, index)
     }
+}
 
 fun ResourcePack.findAndAddHoconResources(
     type: ResourceType,
     namespace: String,
-    map: MutableMap<Identifier, NamespaceResourceManager.EntryList>
-) =
-    findResources(
+    map: MutableMap<Identifier, NamespaceResourceManager.EntryList>,
+    manager: ResourceManager
+) {
+    val resourceFinder = currentResourceFinder.get()!!
+    return findResources(
         type,
         namespace,
-        currentResourceFinder.get()!!.directoryName,
+        resourceFinder.directoryName,
     ) { id, _ ->
-        if (!id.path.endsWith(".hocon")) return@findResources
-        val inputSupplier = openHoconResource(id, type)
+        if (!id.path.endsWith(HOCON_SUFFIX)) return@findResources
+        val inputSupplier = openHoconResource(id, type, manager)
         if (inputSupplier != null)
             map.computeIfAbsent(id.toJson()) { NamespaceResourceManager.EntryList(it) }
                 .fileSources += NamespaceResourceManager.FileSource(this, inputSupplier)
     }
+}

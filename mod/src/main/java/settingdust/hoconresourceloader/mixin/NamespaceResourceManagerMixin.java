@@ -61,7 +61,7 @@ public abstract class NamespaceResourceManagerMixin {
             @Share("isJson") LocalBooleanRef isJson) {
         if (resourcePack == null || !isJson.get()) return;
         final var hoconId = HooksKt.toHocon(identifier);
-        final var inputSupplier = HooksKt.openHoconResource(resourcePack, hoconId, type);
+        final var inputSupplier = HooksKt.openHoconResource(resourcePack, hoconId, type, (ResourceManager) this);
         if (inputSupplier != null)
             cir.setReturnValue(Optional.of(
                     HooksKt.readResource(resourcePack, wrapForDebug(hoconId, resourcePack, inputSupplier))));
@@ -84,7 +84,7 @@ public abstract class NamespaceResourceManagerMixin {
             @Local List<Resource> list) {
         if (resourcePack == null || !isJson.get()) return;
         final var hoconId = HooksKt.toHocon(id);
-        final var inputSupplier = HooksKt.openHoconResource(resourcePack, hoconId, type);
+        final var inputSupplier = HooksKt.openHoconResource(resourcePack, hoconId, type, (ResourceManager) this);
         if (inputSupplier != null)
             list.add(HooksKt.readResource(resourcePack, wrapForDebug(hoconId, resourcePack, inputSupplier)));
     }
@@ -117,7 +117,7 @@ public abstract class NamespaceResourceManagerMixin {
             @Local(ordinal = 1) int index,
             @Local(ordinal = 0) Map<Identifier, Record> map) {
         if (!isJson.get()) return;
-        HooksKt.findHoconResources(resourcePack, type, namespace, index, map);
+        HooksKt.findHoconResources(resourcePack, type, namespace, index, map, (ResourceManager) this);
     }
 
     @Inject(method = "findAndAdd", at = @At("HEAD"))
@@ -142,6 +142,6 @@ public abstract class NamespaceResourceManagerMixin {
             @Local ResourcePack resourcePack,
             @Local Map<Identifier, NamespaceResourceManager.EntryList> idToEntryList) {
         if (!isJson.get()) return;
-        HooksKt.findAndAddHoconResources(resourcePack, type, namespace, idToEntryList);
+        HooksKt.findAndAddHoconResources(resourcePack, type, namespace, idToEntryList, (ResourceManager) this);
     }
 }

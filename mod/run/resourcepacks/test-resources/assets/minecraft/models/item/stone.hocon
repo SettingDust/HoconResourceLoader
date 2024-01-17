@@ -1,0 +1,4 @@
+# The current directory to read file relative is minecraft run dir.
+# `.minecraft` or `.minecraft/versions/{NAME}` dir in commonly
+# At here is `{PROJECT_DIR}/mod/run`
+include file("dirt.hocon")
