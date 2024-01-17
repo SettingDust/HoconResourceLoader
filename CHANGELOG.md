@@ -1,4 +1,9 @@
 
+## [0.2.1] - 2024-01-17
+### :bug: Bug Fixes
+- [`63d74f3`](https://github.com/SettingDust/HoconResourceLoader/commit/63d74f334b561af49d63662791ec80ecb498aa27) - crash caused by `NamespaceResourceManager$Result` has no constructors *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+
 ## [0.2.0] - 2024-01-17
 ### :sparkles: New Features
 - [`204f1c0`](https://github.com/SettingDust/HoconResourceLoader/commit/204f1c03bde9cf6ee2997cc08d0eaa46e5795498) - support patch json file with hocon file *(commit by [@SettingDust](https://github.com/SettingDust))*
@@ -25,3 +30,4 @@
 [0.1.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.0.0...0.1.0
 [0.1.1]: https://github.com/SettingDust/HoconResourceLoader/compare/0.1.0...0.1.1
 [0.2.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.1.1...0.2.0
+[0.2.1]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.0...0.2.1
