@@ -68,7 +68,9 @@ val ResultClass =
             .mappingResolver
             .mapClassName("intermediary", "net.minecraft.class_3294\$class_7681")
     )
-val ResultConstructor = ResultClass.declaredConstructors.single() as Constructor<out Record>
+val ResultConstructor =
+    ResultClass.declaredConstructors.single().also { it.isAccessible = true }
+        as Constructor<out Record>
 
 fun Result(pack: ResourcePack, supplier: InputSupplier<InputStream>, packIndex: Int): Record =
     ResultConstructor.newInstance(pack, supplier, packIndex)
