@@ -1,4 +1,12 @@
 
+## [0.2.2] - 2024-01-17
+### :bug: Bug Fixes
+- [`dcf1819`](https://github.com/SettingDust/HoconResourceLoader/commit/dcf1819aa1610c53debe7a91bcddff1423a383e6) - mark `ResultConstructor` as accessible *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+### :wrench: Chores
+- [`f970a97`](https://github.com/SettingDust/HoconResourceLoader/commit/f970a97fc8d51aae96bd0dbe83a0898cb9c3b5d6) - add test file for lang file *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+
 ## [0.2.1] - 2024-01-17
 ### :bug: Bug Fixes
 - [`63d74f3`](https://github.com/SettingDust/HoconResourceLoader/commit/63d74f334b561af49d63662791ec80ecb498aa27) - crash caused by `NamespaceResourceManager$Result` has no constructors *(commit by [@SettingDust](https://github.com/SettingDust))*
@@ -31,3 +39,4 @@
 [0.1.1]: https://github.com/SettingDust/HoconResourceLoader/compare/0.1.0...0.1.1
 [0.2.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.1.1...0.2.0
 [0.2.1]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.0...0.2.1
+[0.2.2]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.1...0.2.2
