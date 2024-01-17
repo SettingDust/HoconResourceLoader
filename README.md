@@ -11,14 +11,39 @@ So that it shouldn't conflict with any packs that already use the json format.
 ## Examples
 The result of the resource pack at https://github.com/SettingDust/HoconResourceLoader/tree/main/mod/run/resourcepacks/test-resources  
 - https://github.com/SettingDust/HoconResourceLoader/blob/main/mod/run/resourcepacks/test-resources/assets/minecraft/models/item/stone.hocon  
-![img.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img.png)  
+    ```hocon
+    # The current directory to read file relative is minecraft run dir.
+    # `.minecraft` or `.minecraft/versions/{NAME}` dir in commonly
+    # At here is `{PROJECT_DIR}/mod/run`
+    include file("dirt.hocon")
+    ```
+    ![img.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img.png)  
 - https://github.com/SettingDust/HoconResourceLoader/blob/main/mod/run/resourcepacks/test-resources/assets/minecraft/models/item/dirt.hocon  
-![img_1.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_1.png)  
+    ```hocon
+    - parent: "minecraft:block/stone"
+    ```
+    ![img_1.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_1.png)  
 - https://github.com/SettingDust/HoconResourceLoader/blob/main/mod/run/resourcepacks/test-resources/assets/minecraft/models/item/oak_log.hocon  
-![img_2.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_2.png)  
+    ```hocon
+    # Support identifier
+    include "minecraft:models/item/dirt.json"
+    ```
+    ![img_2.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_2.png)  
 - https://github.com/SettingDust/HoconResourceLoader/blob/main/mod/run/resourcepacks/test-resources/assets/minecraft/models/item/oak_wood.hocon  
-![img_3.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_3.png)  
+    ```hocon
+    # Will try to find under the starting path that passed to resource manager.
+    # It's `models/` here
+    include "minecraft:item/dirt.json"
+    ```
+    ![img_3.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_3.png)  
 - https://github.com/SettingDust/HoconResourceLoader/blob/main/mod/run/resourcepacks/test-resources/assets/minecraft/models/item/torch.hocon  
-![img_4.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_4.png)
+    ```hocon
+    # Specifically, include json files won't be resolved to hocon.
+    # So, you can do patch for the json file and provide the hocon file as json to the game.
+    include "minecraft:models/item/torch.json"
+    
+    textures.layer0 = "minecraft:block/soul_torch"
+    ```
+    ![img_4.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_4.png)
 ## Credit
 Icon from https://www.flaticon.com/free-icon/folder_3767084#
