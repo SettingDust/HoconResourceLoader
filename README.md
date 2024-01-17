@@ -17,3 +17,6 @@ The result of the resource pack at https://github.com/SettingDust/HoconResourceL
 ![img_2.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_2.png)  
 - https://github.com/SettingDust/HoconResourceLoader/blob/main/mod/run/resourcepacks/test-resources/assets/minecraft/models/item/oak_wood.hocon  
 ![img_3.png](https://raw.githubusercontent.com/SettingDust/HoconResourceLoader/main/docs/img_3.png)  
+
+## Credit
+Icon from https://www.flaticon.com/free-icon/folder_3767084#

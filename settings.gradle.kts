@@ -102,9 +102,9 @@ dependencyResolutionManagement.versionCatalogs.create("catalog") {
     library("connector", "dev.su5ed.sinytra", "Connector").version("1.0.0-beta.32+$minecraft")
     // https://modrinth.com/mod/forgified-fabric-api/versions
     library("forgified-fabric-api", "dev.su5ed.sinytra.fabric-api", "fabric-api")
-        .version("$fabricApi+1.10.4+$minecraft")
+        .version("$fabricApi+1.10.5+$minecraft")
     // https://modrinth.com/mod/connector-extras/versions
-    library("connector-extras", "maven.modrinth", "connector-extras").version("1.9.0+$minecraft")
+    library("connector-extras", "maven.modrinth", "connector-extras").version("1.9.2+$minecraft")
 
     /**
      * ***********
