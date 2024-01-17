@@ -68,6 +68,7 @@ dependencies {
     mappings(variantOf(catalog.yarn) { classifier("v2") })
 
     modImplementation(catalog.fabric.loader)
+    modImplementation(catalog.fabric.api)
     modImplementation(catalog.fabric.kotlin)
 
     val modClientImplementation by configurations
@@ -77,6 +78,7 @@ dependencies {
     "testmodImplementation"(sourceSets["client"].output)
 
     modImplementation(include(catalog.kinecraft.serialization.get()) {})
+    modImplementation(catalog.patched)
 
     //    implementation(include(catalog.kotlinx.serialization.hocon.get()) {})
     implementation(include(catalog.typesafe.config.get()) {})

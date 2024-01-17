@@ -85,8 +85,7 @@ public abstract class NamespaceResourceManagerMixin {
         if (resourcePack == null || !needParse.get()) return;
         final var hoconId = HooksKt.toHocon(id);
         final var inputSupplier = HooksKt.openHoconResource(resourcePack, hoconId, type, (ResourceManager) this);
-        if (inputSupplier != null)
-            list.add(HooksKt.readResource(resourcePack, wrapForDebug(hoconId, resourcePack, inputSupplier)));
+        if (inputSupplier != null) list.add(HooksKt.readResource(resourcePack, inputSupplier));
     }
 
     @Inject(method = "findResources", at = @At("HEAD"))

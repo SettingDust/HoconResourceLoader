@@ -121,6 +121,9 @@ dependencyResolutionManagement.versionCatalogs.create("catalog") {
 
     // https://github.com/lightbend/config
     library("typesafe-config", "com.typesafe", "config").version("1.4.3")
+
+    // https://modrinth.com/mod/patched/versions
+    library("patched", "maven.modrinth", "patched").version("3.2.3+$minecraft-fabric")
 }
 
 plugins {
