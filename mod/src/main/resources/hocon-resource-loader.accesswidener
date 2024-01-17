@@ -1,6 +1,6 @@
 accessWidener	v1	named
 
-accessible class net/minecraft/resource/NamespaceResourceManager$Result
+#accessible class net/minecraft/resource/NamespaceResourceManager$Result
 accessible class net/minecraft/resource/NamespaceResourceManager$EntryList
 accessible method net/minecraft/resource/NamespaceResourceManager$EntryList <init> (Lnet/minecraft/util/Identifier;)V
 accessible method net/minecraft/resource/NamespaceResourceManager$FileSource <init> (Lnet/minecraft/resource/ResourcePack;Lnet/minecraft/resource/InputSupplier;)V
