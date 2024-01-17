@@ -1,4 +1,9 @@
 
+## [0.1.1] - 2024-01-17
+### :sparkles: New Features
+- [`7a1674b`](https://github.com/SettingDust/HoconResourceLoader/commit/7a1674ba1a12877ab72b0e41fc4039afbdcd36ea) - using MappingResolver instead of hardcoded *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+
 ## [0.1.0] - 2024-01-17
 ### :sparkles: New Features
 - [`b807335`](https://github.com/SettingDust/HoconResourceLoader/commit/b807335bd3a23ff9a5654bcd35cb901b48cd6cef) - just works *(commit by [@SettingDust](https://github.com/SettingDust))*
@@ -13,3 +18,4 @@
 
 
 [0.1.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.0.0...0.1.0
+[0.1.1]: https://github.com/SettingDust/HoconResourceLoader/compare/0.1.0...0.1.1
