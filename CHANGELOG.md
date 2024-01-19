@@ -1,4 +1,9 @@
 
+## [0.2.4] - 2024-01-19
+### :wrench: Chores
+- [`f7de453`](https://github.com/SettingDust/HoconResourceLoader/commit/f7de453c6368bd682f3dc4d3a9cf4e94e6060f59) - switched to MethodHandle instead of Reflection *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+
 ## [0.2.3] - 2024-01-17
 ### :sparkles: New Features
 - [`d20fc9e`](https://github.com/SettingDust/HoconResourceLoader/commit/d20fc9ef52460f1651dd35d7a1e35dc3a13e17f8) - remove `wrapForDebug` for `getAllResources` so that support Patched *(commit by [@SettingDust](https://github.com/SettingDust))*
@@ -46,3 +51,4 @@
 [0.2.1]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.0...0.2.1
 [0.2.2]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.1...0.2.2
 [0.2.3]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.2...0.2.3
+[0.2.4]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.3...0.2.4
