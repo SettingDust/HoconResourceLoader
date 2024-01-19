@@ -5,7 +5,8 @@ import com.typesafe.config.ConfigParseOptions
 import com.typesafe.config.ConfigRenderOptions
 import com.typesafe.config.ConfigSyntax
 import java.io.InputStream
-import java.lang.reflect.Constructor
+import java.lang.invoke.MethodHandles
+import java.lang.invoke.MethodType
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.resource.InputSupplier
 import net.minecraft.resource.NamespaceResourceManager
@@ -62,18 +63,29 @@ fun ResourcePack.openHoconResource(
 fun ResourcePack.readResource(inputSupplier: InputSupplier<InputStream>) =
     Resource(this, inputSupplier)
 
-val ResultClass =
+val ResultClass by lazy {
     Class.forName(
         FabricLoader.getInstance()
             .mappingResolver
             .mapClassName("intermediary", "net.minecraft.class_3294\$class_7681")
     )
-val ResultConstructor =
-    ResultClass.declaredConstructors.single().also { it.isAccessible = true }
-        as Constructor<out Record>
+}
+
+val ResultConstructorType by lazy {
+    MethodType.methodType(
+        Void.TYPE,
+        ResourcePack::class.java,
+        InputSupplier::class.java,
+        Int::class.javaPrimitiveType
+    )
+}
+
+val ResultConstructorHandle by lazy {
+    MethodHandles.lookup().findConstructor(ResultClass, ResultConstructorType)
+}
 
 fun Result(pack: ResourcePack, supplier: InputSupplier<InputStream>, packIndex: Int): Record =
-    ResultConstructor.newInstance(pack, supplier, packIndex)
+    ResultConstructorHandle.invoke(pack, supplier, packIndex) as Record
 
 @JvmOverloads
 fun ResourcePack.findHoconResources(
