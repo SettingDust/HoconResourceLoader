@@ -1,4 +1,9 @@
 
+## [0.2.5] - 2024-02-03
+### :bug: Bug Fixes
+- [`fea9e07`](https://github.com/SettingDust/HoconResourceLoader/commit/fea9e07177472096265601fe6e053e9b92ed3ab9) - can't access Result constructor *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+
 ## [0.2.4] - 2024-01-19
 ### :wrench: Chores
 - [`f7de453`](https://github.com/SettingDust/HoconResourceLoader/commit/f7de453c6368bd682f3dc4d3a9cf4e94e6060f59) - switched to MethodHandle instead of Reflection *(commit by [@SettingDust](https://github.com/SettingDust))*
@@ -52,3 +57,4 @@
 [0.2.2]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.1...0.2.2
 [0.2.3]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.2...0.2.3
 [0.2.4]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.3...0.2.4
+[0.2.5]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.4...0.2.5
