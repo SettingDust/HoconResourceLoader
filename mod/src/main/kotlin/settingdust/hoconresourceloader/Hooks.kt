@@ -5,6 +5,7 @@ import com.typesafe.config.ConfigParseOptions
 import com.typesafe.config.ConfigRenderOptions
 import com.typesafe.config.ConfigSyntax
 import java.io.InputStream
+import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
 import java.lang.invoke.MethodType
 import net.fabricmc.loader.api.FabricLoader
@@ -63,7 +64,7 @@ fun ResourcePack.openHoconResource(
 fun ResourcePack.readResource(inputSupplier: InputSupplier<InputStream>) =
     Resource(this, inputSupplier)
 
-val ResultClass by lazy {
+val ResultClass: Class<*> by lazy {
     Class.forName(
         FabricLoader.getInstance()
             .mappingResolver
@@ -71,7 +72,7 @@ val ResultClass by lazy {
     )
 }
 
-val ResultConstructorType by lazy {
+val ResultConstructorType: MethodType by lazy {
     MethodType.methodType(
         Void.TYPE,
         ResourcePack::class.java,
@@ -80,8 +81,9 @@ val ResultConstructorType by lazy {
     )
 }
 
-val ResultConstructorHandle by lazy {
-    MethodHandles.lookup().findConstructor(ResultClass, ResultConstructorType)
+val ResultConstructorHandle: MethodHandle by lazy {
+    MethodHandles.privateLookupIn(ResultClass, MethodHandles.lookup())
+        .findConstructor(ResultClass, ResultConstructorType)
 }
 
 fun Result(pack: ResourcePack, supplier: InputSupplier<InputStream>, packIndex: Int): Record =
