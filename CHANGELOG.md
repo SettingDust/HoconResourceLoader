@@ -1,4 +1,12 @@
 
+## [0.2.6] - 2024-02-05
+### :sparkles: New Features
+- [`f41c20f`](https://github.com/SettingDust/HoconResourceLoader/commit/f41c20fc0b8f57fb50941d3d93a366ac7f66d125) - support array as root *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+### :wrench: Chores
+- [`1722b0f`](https://github.com/SettingDust/HoconResourceLoader/commit/1722b0f6cf54520b0717bca80248341c95d7a446) - **deps**: bump org.danilopianini.gradle-pre-commit-git-hooks *(commit by [@dependabot[bot]](https://github.com/apps/dependabot))*
+
+
 ## [0.2.5] - 2024-02-03
 ### :bug: Bug Fixes
 - [`fea9e07`](https://github.com/SettingDust/HoconResourceLoader/commit/fea9e07177472096265601fe6e053e9b92ed3ab9) - can't access Result constructor *(commit by [@SettingDust](https://github.com/SettingDust))*
@@ -58,3 +66,4 @@
 [0.2.3]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.2...0.2.3
 [0.2.4]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.3...0.2.4
 [0.2.5]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.4...0.2.5
+[0.2.6]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.5...0.2.6
