@@ -1,9 +1,10 @@
 package settingdust.hoconresourceloader
 
-import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigParseOptions
 import com.typesafe.config.ConfigRenderOptions
 import com.typesafe.config.ConfigSyntax
+import com.typesafe.config.impl.Parseable
+import com.typesafe.config.impl.parseValue
 import java.io.InputStream
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
@@ -29,8 +30,8 @@ val ResourceFinder.directoryName
 val ResourceFinder.fileExtension
     get() = (this as ResourceFinderAccessor).fileExtension!!
 
-private const val HOCON_SUFFIX = ".hocon"
-private const val JSON_SUFFIX = ".json"
+const val HOCON_SUFFIX = ".hocon"
+const val JSON_SUFFIX = ".json"
 
 fun Identifier.toHocon() = Identifier(namespace, "${path.removeSuffix(JSON_SUFFIX)}$HOCON_SUFFIX")
 
@@ -48,13 +49,13 @@ fun ResourcePack.openHoconResource(
     val inputStream = resourceSupplier.get()
     val directoryName = resourceFinder?.directoryName
     return InputSupplier {
-        ConfigFactory.parseReader(
+        Parseable.newReader(
                 inputStream.reader(),
                 ConfigParseOptions.defaults()
                     .setSyntax(ConfigSyntax.CONF)
                     .setIncluder(SimpleIncluder(manager, identifier, directoryName ?: ""))
             )
-            .root()
+            .parseValue()
             .render(ConfigRenderOptions.concise())
             .encodeToByteArray()
             .inputStream()
@@ -86,6 +87,7 @@ val ResultConstructorHandle: MethodHandle by lazy {
         .findConstructor(ResultClass, ResultConstructorType)
 }
 
+@Suppress("FunctionName")
 fun Result(pack: ResourcePack, supplier: InputSupplier<InputStream>, packIndex: Int): Record =
     ResultConstructorHandle.invoke(pack, supplier, packIndex) as Record
 
