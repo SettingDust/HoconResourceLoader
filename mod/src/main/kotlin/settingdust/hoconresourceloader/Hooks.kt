@@ -1,10 +1,9 @@
 package settingdust.hoconresourceloader
 
+import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigParseOptions
 import com.typesafe.config.ConfigRenderOptions
 import com.typesafe.config.ConfigSyntax
-import com.typesafe.config.impl.Parseable
-import com.typesafe.config.impl.parseValue
 import java.io.InputStream
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
@@ -47,14 +46,16 @@ fun ResourcePack.openHoconResource(
     val resourceSupplier = open(type, identifier) ?: return null
     // Json file has no mcmeta. Needn't read
     val directoryName = resourceFinder?.directoryName
+
     return InputSupplier {
-        Parseable.newReader(
+        ConfigFactory.parseReader(
                 resourceSupplier.get().reader(),
                 ConfigParseOptions.defaults()
                     .setSyntax(ConfigSyntax.CONF)
                     .setIncluder(SimpleIncluder(manager, identifier, directoryName ?: ""))
             )
-            .parseValue()
+            .resolve()
+            .root()
             .render(ConfigRenderOptions.concise())
             .encodeToByteArray()
             .inputStream()
