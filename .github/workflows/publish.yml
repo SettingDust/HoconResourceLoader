@@ -53,6 +53,7 @@ jobs:
           version: ${{ github.ref_name }}
 
           loaders: |
+            forge
             fabric
             quilt
 

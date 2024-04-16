@@ -46,11 +46,10 @@ fun ResourcePack.openHoconResource(
 ): InputSupplier<InputStream>? {
     val resourceSupplier = open(type, identifier) ?: return null
     // Json file has no mcmeta. Needn't read
-    val inputStream = resourceSupplier.get()
     val directoryName = resourceFinder?.directoryName
     return InputSupplier {
         Parseable.newReader(
-                inputStream.reader(),
+                resourceSupplier.get().reader(),
                 ConfigParseOptions.defaults()
                     .setSyntax(ConfigSyntax.CONF)
                     .setIncluder(SimpleIncluder(manager, identifier, directoryName ?: ""))
