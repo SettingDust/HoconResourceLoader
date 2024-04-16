@@ -1,4 +1,9 @@
 
+## [0.3.0] - 2024-04-16
+### :bug: Bug Fixes
+- [`f310962`](https://github.com/SettingDust/HoconResourceLoader/commit/f3109628f24944129abd6f5866748eac7c62adad) - resolve var *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+
 ## [0.2.7] - 2024-04-16
 ### :sparkles: New Features
 - [`6d9dadf`](https://github.com/SettingDust/HoconResourceLoader/commit/6d9dadf122c4c9b98f660b81b3c345b8263a5052) - avoid reuse inputstream *(commit by [@SettingDust](https://github.com/SettingDust))*
@@ -76,3 +81,4 @@
 [0.2.5]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.4...0.2.5
 [0.2.6]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.5...0.2.6
 [0.2.7]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.6...0.2.7
+[0.3.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.7...0.3.0
