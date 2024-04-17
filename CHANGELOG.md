@@ -1,4 +1,15 @@
 
+## [0.4.0] - 2024-04-17
+### :boom: BREAKING CHANGES
+- due to [`5129ee3`](https://github.com/SettingDust/HoconResourceLoader/commit/5129ee3419f290a9ccea194dda5f99176dbf8479) - require enable in pack meta for better performance *(commit by [@SettingDust](https://github.com/SettingDust))*:
+
+  require enable in pack meta for better performance
+
+
+### :sparkles: New Features
+- [`5129ee3`](https://github.com/SettingDust/HoconResourceLoader/commit/5129ee3419f290a9ccea194dda5f99176dbf8479) - require enable in pack meta for better performance *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+
 ## [0.3.0] - 2024-04-16
 ### :bug: Bug Fixes
 - [`f310962`](https://github.com/SettingDust/HoconResourceLoader/commit/f3109628f24944129abd6f5866748eac7c62adad) - resolve var *(commit by [@SettingDust](https://github.com/SettingDust))*
@@ -82,3 +93,4 @@
 [0.2.6]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.5...0.2.6
 [0.2.7]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.6...0.2.7
 [0.3.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.7...0.3.0
+[0.4.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.3.0...0.4.0
