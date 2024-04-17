@@ -1,5 +1,6 @@
 package settingdust.hoconresourceloader.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
@@ -46,7 +47,23 @@ public abstract class NamespaceResourceManagerMixin {
         final CallbackInfoReturnable<Optional<Resource>> cir,
         @Share("needParse") LocalBooleanRef needParse
     ) {
-        if (HooksKt.canParsing() && identifier.getPath().endsWith(".json")) needParse.set(true);
+        if (HooksKt.canParsing() && identifier.getPath().endsWith(HooksKt.JSON_SUFFIX)) needParse.set(true);
+    }
+
+    @ModifyExpressionValue(
+        method = {"getResource", "getAllResources"},
+        at = @At(
+            value = "FIELD",
+            target = "Lnet/minecraft/resource/NamespaceResourceManager$FilterablePack;" +
+                     "underlying:Lnet/minecraft/resource/ResourcePack;"
+        )
+    )
+    private ResourcePack getResource$determineMeta(
+        final ResourcePack original, @Share("needParse") LocalBooleanRef needParse
+    ) {
+        if (needParse.get() && !HooksKt.getPackMetaCache().getUnchecked(original))
+            needParse.set(false);
+        return original;
     }
 
     @Inject(
@@ -54,9 +71,8 @@ public abstract class NamespaceResourceManagerMixin {
         at =
         @At(
             value = "INVOKE",
-            shift = At.Shift.BEFORE,
-            target = "Lnet/minecraft/resource/NamespaceResourceManager$FilterablePack;isFiltered"
-                     + "(Lnet/minecraft/util/Identifier;)Z"
+            target = "Lnet/minecraft/resource/ResourcePack;open(Lnet/minecraft/resource/ResourceType;" +
+                     "Lnet/minecraft/util/Identifier;)Lnet/minecraft/resource/InputSupplier;"
         ),
         cancellable = true
     )
@@ -66,7 +82,7 @@ public abstract class NamespaceResourceManagerMixin {
         @Local ResourcePack resourcePack,
         @Share("needParse") LocalBooleanRef needParse
     ) {
-        if (resourcePack == null || !needParse.get()) return;
+        if (!needParse.get()) return;
         final var hoconId = HooksKt.toHocon(identifier);
         final var inputSupplier = HooksKt.openHoconResource(resourcePack, hoconId, type, (ResourceManager) this);
         if (inputSupplier != null)
@@ -131,6 +147,7 @@ public abstract class NamespaceResourceManagerMixin {
         @Local(ordinal = 1) int index,
         @Local(ordinal = 0) Map<Identifier, Record> map
     ) {
+        if (needParse.get() && !HooksKt.getPackMetaCache().getUnchecked(resourcePack)) return;
         if (!needParse.get()) return;
         HooksKt.findHoconResources(resourcePack, type, namespace, index, map, (ResourceManager) this);
     }
@@ -161,6 +178,7 @@ public abstract class NamespaceResourceManagerMixin {
         @Local ResourcePack resourcePack,
         @Local(argsOnly = true) Map<Identifier, NamespaceResourceManager.EntryList> idToEntryList
     ) {
+        if (needParse.get() && !HooksKt.getPackMetaCache().getUnchecked(resourcePack)) return;
         if (!needParse.get()) return;
         HooksKt.findAndAddHoconResources(resourcePack, type, namespace, idToEntryList, (ResourceManager) this);
     }

@@ -1,5 +1,9 @@
 package settingdust.hoconresourceloader
 
+import com.google.common.cache.CacheBuilder
+import com.google.common.cache.CacheLoader
+import com.google.common.cache.LoadingCache
+import com.google.gson.JsonObject
 import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigParseOptions
 import com.typesafe.config.ConfigRenderOptions
@@ -16,8 +20,35 @@ import net.minecraft.resource.ResourceFinder
 import net.minecraft.resource.ResourceManager
 import net.minecraft.resource.ResourcePack
 import net.minecraft.resource.ResourceType
+import net.minecraft.resource.metadata.ResourceMetadataReader
 import net.minecraft.util.Identifier
 import settingdust.hoconresourceloader.mixin.ResourceFinderAccessor
+
+object MetadataParser : ResourceMetadataReader<Boolean> {
+    override fun getKey() = "hoconresourceloader"
+
+    override fun fromJson(json: JsonObject): Boolean {
+        return json.getAsJsonPrimitive("enabled").asBoolean
+    }
+}
+
+val packMetaCache: LoadingCache<ResourcePack, Boolean> =
+    CacheBuilder.newBuilder()
+        .build(
+            object : CacheLoader<ResourcePack, Boolean>() {
+                override fun load(key: ResourcePack): Boolean {
+                    return try {
+                        val enabled = key.parseMetadata(MetadataParser)
+                        if (enabled == true)
+                            HoconResourceLoader.LOGGER.info("Enabled for ${key.name}")
+                        enabled
+                    } catch (e: Throwable) {
+                        HoconResourceLoader.LOGGER.warn("Failed to parse metadata", e)
+                        false
+                    } ?: false
+                }
+            }
+        )
 
 val currentResourceFinder = ThreadLocal<ResourceFinder?>()
 val abortParsing = ThreadLocal<Boolean>()
