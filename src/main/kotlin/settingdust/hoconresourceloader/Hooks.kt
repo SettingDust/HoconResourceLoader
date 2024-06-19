@@ -40,7 +40,7 @@ val packMetaCache: LoadingCache<ResourcePack, Boolean> =
                     return try {
                         val enabled = key.parseMetadata(MetadataParser)
                         if (enabled == true)
-                            HoconResourceLoader.LOGGER.info("Enabled for ${key.name}")
+                            HoconResourceLoader.LOGGER.info("Enabled for ${key.info.id}")
                         enabled
                     } catch (e: Throwable) {
                         HoconResourceLoader.LOGGER.warn("Failed to parse metadata", e)
@@ -63,9 +63,9 @@ val ResourceFinder.fileExtension
 const val HOCON_SUFFIX = ".hocon"
 const val JSON_SUFFIX = ".json"
 
-fun Identifier.toHocon() = Identifier(namespace, "${path.removeSuffix(JSON_SUFFIX)}$HOCON_SUFFIX")
+fun Identifier.toHocon() = Identifier.of(namespace, "${path.removeSuffix(JSON_SUFFIX)}$HOCON_SUFFIX")
 
-fun Identifier.toJson() = Identifier(namespace, "${path.removeSuffix(HOCON_SUFFIX)}$JSON_SUFFIX")
+fun Identifier.toJson() = Identifier.of(namespace, "${path.removeSuffix(HOCON_SUFFIX)}$JSON_SUFFIX")
 
 @JvmOverloads
 fun ResourcePack.openHoconResource(

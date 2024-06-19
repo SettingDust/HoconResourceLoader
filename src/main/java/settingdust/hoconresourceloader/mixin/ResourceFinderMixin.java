@@ -1,6 +1,5 @@
 package settingdust.hoconresourceloader.mixin;
 
-import java.util.Map;
 import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
@@ -10,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import settingdust.hoconresourceloader.HooksKt;
+
+import java.util.Map;
 
 @Mixin(ResourceFinder.class)
 public class ResourceFinderMixin {

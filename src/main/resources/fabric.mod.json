@@ -22,26 +22,10 @@
         "adapter": "kotlin",
         "value": "${group}.EntrypointKt::init"
       }
-    ],
-    "client": [
-      {
-        "adapter": "kotlin",
-        "value": "${group}.client.EntrypointKt::init"
-      }
-    ],
-    "modmenu": [
-      {
-        "adapter": "kotlin",
-        "value": "${group}.client.ModMenuEntrypoint"
-      }
     ]
   },
   "mixins": [
-    "${id}.mixins.json",
-    {
-      "config": "${id}.client.mixins.json",
-      "environment": "client"
-    }
+    "${id}.mixins.json"
   ],
   "depends": {
     "fabricloader": "${fabric_loader}",

@@ -42,5 +42,5 @@ bin/
 .DS_Store
 
 **/run/*
-!mod/run/*.hocon
-!mod/run/resourcepacks
+!run/*.hocon
+!run/resourcepacks

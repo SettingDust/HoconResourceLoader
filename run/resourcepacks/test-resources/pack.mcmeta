@@ -6,5 +6,8 @@
             "fallback": "Assets of SettingSun"
         },
         "supported_formats": [15, 22]
+    },
+    "hoconresourceloader" : {
+        "enabled": true
     }
 }

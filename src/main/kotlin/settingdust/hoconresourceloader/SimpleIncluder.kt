@@ -29,7 +29,7 @@ class SimpleIncluder(
                 abortParsing.set(true)
                 manager.getResource(it).getOrNull()
                     ?: manager
-                        .getResource(Identifier(it.namespace, "$startingPath/${it.path}"))
+                        .getResource(Identifier.of(it.namespace, "$startingPath/${it.path}"))
                         .getOrNull()
                         .also { abortParsing.remove() }
             }

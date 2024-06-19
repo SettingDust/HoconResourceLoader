@@ -3,6 +3,23 @@ HOCON's syntax is more flexible and supports advanced syntax such as variables a
 The mod will load any file in packs ends with `.hocon` with HOCON parser and trick the game to think it's a json file.  
 So that it shouldn't conflict with any packs that already use the json format.  
 
+Need to enable in pack.mcmeta lie below:
+```json
+{
+    "pack": {
+        "pack_format": 15,
+        "description": {
+            "translate": "settingsun.pack",
+            "fallback": "Assets of SettingSun"
+        },
+        "supported_formats": [15, 22]
+    },
+    "hoconresourceloader" : {
+        "enabled": true
+    }
+}
+```
+
 ## Advantage of HOCON
 - `include` url, file (Can be used for resource/data pack config), minecraft resource by identifier
 - With `include`, you can include the origin json file and modify the value instead of edit the whole file. Far more convenient than the JsonPatch
