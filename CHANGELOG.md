@@ -1,4 +1,9 @@
 
+## [0.5.0] - 2024-06-19
+### :recycle: Refactors
+- [`2129c7a`](https://github.com/SettingDust/HoconResourceLoader/commit/2129c7a54c0949c9979c1f7153f90ec68f431921) - port to 1.21 *(commit by [@SettingDust](https://github.com/SettingDust))*
+
+
 ## [0.4.0] - 2024-04-17
 ### :boom: BREAKING CHANGES
 - due to [`5129ee3`](https://github.com/SettingDust/HoconResourceLoader/commit/5129ee3419f290a9ccea194dda5f99176dbf8479) - require enable in pack meta for better performance *(commit by [@SettingDust](https://github.com/SettingDust))*:
@@ -94,3 +99,4 @@
 [0.2.7]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.6...0.2.7
 [0.3.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.2.7...0.3.0
 [0.4.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.3.0...0.4.0
+[0.5.0]: https://github.com/SettingDust/HoconResourceLoader/compare/0.4.0...0.5.0
